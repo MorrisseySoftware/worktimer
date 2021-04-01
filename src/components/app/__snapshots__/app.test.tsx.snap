@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Tests Default State Tests should display valid html 1`] = `
+<div
+  className="container"
+>
+  <button
+    className="toggle__btn button--off"
+    onClick={[Function]}
+  >
+    START TIMER
+  </button>
+  <div
+    className="container completed"
+  />
+  <div
+    className="history__container"
+  >
+    <div
+      className="history__list"
+    >
+      NO TIMERS
+    </div>
+    <div
+      className="history__total"
+    >
+      Total Time - 
+      None
+    </div>
+  </div>
+  <div>
+    <audio
+      className="audio-element"
+    >
+      <source
+        src="warning.mp3"
+      />
+    </audio>
+  </div>
+</div>
+`;
+
+exports[`App Tests Press Toggle Button should display valid html 1`] = `
+<App>
+  <div
+    className="container"
+  >
+    <ToggleButton
+      clickHandler={[Function]}
+      off={false}
+    >
+      <button
+        className="toggle__btn button--on"
+        onClick={[Function]}
+      >
+        STOP TIMER
+      </button>
+    </ToggleButton>
+    <TimerDisplay
+      completionCallback={[Function]}
+      completionTime={2019-05-14T12:01:58.135Z}
+      startTimer={true}
+    >
+      <div
+        className="container "
+      >
+        <div
+          className="timer__container--base"
+        >
+          <p
+            className="timer__label"
+          >
+            Time remaining
+          </p>
+          <p
+            className="timer"
+          >
+            60
+            :
+            00
+            :
+            00
+          </p>
+          <p
+            className="completion__label"
+          >
+            Completion Time:
+             
+            22:01:58
+          </p>
+        </div>
+      </div>
+    </TimerDisplay>
+    <StatsList
+      history={Array []}
+    >
+      <div
+        className="history__container"
+      >
+        <div
+          className="history__list"
+        >
+          NO TIMERS
+        </div>
+        <div
+          className="history__total"
+        >
+          Total Time - 
+          None
+        </div>
+      </div>
+    </StatsList>
+    <TimerDisplay
+      play={false}
+    >
+      <div>
+        <audio
+          className="audio-element"
+        >
+          <source
+            src="warning.mp3"
+          />
+        </audio>
+      </div>
+    </TimerDisplay>
+  </div>
+</App>
+`;
+
+exports[`App Tests Press Toggle Button twice should display valid html 1`] = `
+<App>
+  <div
+    className="container"
+  >
+    <ToggleButton
+      clickHandler={[Function]}
+      off={true}
+    >
+      <button
+        className="toggle__btn button--off"
+        onClick={[Function]}
+      >
+        START TIMER
+      </button>
+    </ToggleButton>
+    <TimerDisplay
+      completionCallback={[Function]}
+      completionTime={2021-04-01T09:17:36.046Z}
+      startTimer={false}
+    >
+      <div
+        className="container completed"
+      >
+        <div
+          className="timer__container--base"
+        >
+          <p
+            className="timer__label"
+          >
+            Time remaining
+          </p>
+          <p
+            className="timer"
+          >
+            60
+            :
+            00
+            :
+            00
+          </p>
+          <p
+            className="completion__label"
+          >
+            Completion Time:
+             
+            20:17:36
+          </p>
+        </div>
+      </div>
+    </TimerDisplay>
+    <StatsList
+      history={
+        Array [
+          Object {
+            "completed": false,
+            "completionTime": 2021-04-01T09:17:36.046Z,
+            "timer": Object {
+              "milliseconds": 100,
+              "minutes": -1,
+              "seconds": 59,
+            },
+          },
+        ]
+      }
+    >
+      <div
+        className="history__container"
+      >
+        <div
+          className="history__list"
+        >
+          <StatItem
+            deleteHandler={[Function]}
+            entry={
+              Object {
+                "completed": false,
+                "completionTime": 2021-04-01T09:17:36.046Z,
+                "timer": Object {
+                  "milliseconds": 100,
+                  "minutes": -1,
+                  "seconds": 59,
+                },
+              }
+            }
+            key="0"
+          >
+            <p
+              className="stat__container"
+            >
+              <span
+                className="stat__label"
+              >
+                08:17 PM - 0-1:59:100
+              </span>
+              <button
+                className="delete__btn"
+                onClick={[Function]}
+              >
+                Delete
+              </button>
+            </p>
+          </StatItem>
+        </div>
+        <div
+          className="history__total"
+        >
+          Total Time - 
+          0-1:0-1:00
+        </div>
+      </div>
+    </StatsList>
+    <TimerDisplay
+      play={false}
+    >
+      <div>
+        <audio
+          className="audio-element"
+        >
+          <source
+            src="warning.mp3"
+          />
+        </audio>
+      </div>
+    </TimerDisplay>
+  </div>
+</App>
+`;

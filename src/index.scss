@@ -1,0 +1,39 @@
+// Main Colours
+
+$white--base: #fff;
+$grey--base: #666;
+$grey--shadow: #aaa;
+
+$green--base: #159f3b;
+$green--highlight: #1b582d;
+$green__text--base: $white--base;
+$green--background: #f5fff6;
+
+$red--base: #9f1515;
+$red--highlight: #6b2323;
+$red__text--base: $white--base;
+$red--background: #ffeded;
+
+$orange--base: #d27200;
+$orange--highlight: #9e5803;
+$orange__text--base: $white--base;
+$orange--background: #fff7ed;
+
+$default--background__color: $grey--base;
+$default--text__color: $white--base;
+
+html,
+body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}

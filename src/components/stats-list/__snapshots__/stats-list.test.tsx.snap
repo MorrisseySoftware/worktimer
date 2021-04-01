@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stats List Tests should update the display list when the history prop changes 1`] = `
+<div
+  className="history__container"
+>
+  <div
+    className="history__list"
+  >
+    NO TIMERS
+  </div>
+  <div
+    className="history__total"
+  >
+    Total Time - 
+    None
+  </div>
+</div>
+`;
+
+exports[`Stats List Tests should update the display list when the history prop changes 2`] = `
+<div
+  className="history__container"
+>
+  <div
+    className="history__list"
+  >
+    <p
+      className="stat__container"
+    >
+      <span
+        className="stat__label"
+      >
+        07:11 AM - 15:27:75
+      </span>
+      <button
+        className="delete__btn"
+        onClick={[Function]}
+      >
+        Delete
+      </button>
+    </p>
+  </div>
+  <div
+    className="history__total"
+  >
+    Total Time - 
+    15:27:75
+  </div>
+</div>
+`;

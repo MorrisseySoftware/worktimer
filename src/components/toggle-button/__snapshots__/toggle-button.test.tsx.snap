@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toggle Button Tests should toggle the button state from OFF to ON 1`] = `
+<button
+  className="toggle__btn button--off"
+  onClick={[Function]}
+>
+  START TIMER
+</button>
+`;
+
+exports[`Toggle Button Tests should toggle the button state from OFF to ON 2`] = `
+<button
+  className="toggle__btn button--on"
+  onClick={[Function]}
+>
+  STOP TIMER
+</button>
+`;

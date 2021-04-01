@@ -1,0 +1,28 @@
+@import '../../index';
+
+$borderWidth: 1px;
+
+.history__container {
+    font-family: Arial, Helvetica, sans-serif;
+    color: $grey--shadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.history__list {
+    border-top: $borderWidth solid $grey--shadow;
+    border-bottom: $borderWidth solid $grey--shadow;
+    padding: 25px 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.history__total {
+    border-bottom: $borderWidth solid $grey--shadow;
+    padding: 10px;
+}

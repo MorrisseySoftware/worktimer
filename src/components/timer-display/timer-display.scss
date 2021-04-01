@@ -1,0 +1,58 @@
+@import '../../index';
+
+$borderRadius: 5px;
+
+.timer__container--base {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 50px;
+    border: 1px solid $green--base;
+    background-color: $green__background;
+    border-radius: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+}
+
+.timer__label {
+    color: $green--base;
+    font-size: 16pt;
+    margin: 0;
+}
+
+.timer {
+    color: $green--base;
+    font-size: 50pt;
+    margin: 0;
+    font-weight: bold;
+}
+
+.completion__label {
+    color: $default--background__color;
+    font-size: 12pt;
+    margin: 0;
+    font-weight: bold;
+}
+
+.warning {
+    .timer__container--base {
+        border: 1px solid $orange--base;
+        background-color: $orange__background;
+    }
+
+    .timer__label,
+    .timer {
+        color: $orange--base;
+    }
+}
+
+.completed {
+    .timer__container--base {
+        border: 1px solid $red--base;
+        background-color: $red__background;
+    }
+
+    .timer__label,
+    .timer {
+        color: $red--base;
+    }
+}

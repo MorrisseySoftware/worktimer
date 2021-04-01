@@ -1,0 +1,46 @@
+@import '../../index';
+
+$borderWidth: 2px;
+
+.toggle__btn {
+    position: relative;
+    width: 369px;
+    margin-bottom: 15px;
+    padding: 10px 100px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 15pt;
+    color: $default--text__color;
+    background-color: $default--background__color;
+    border: $borderWidth solid $default--background__color;
+    border-radius: 10px;
+}
+
+.button--on {
+    color: $red__text--base;
+    background-color: $red--base;
+    border: $borderWidth solid $red--base;
+
+    &:hover {
+        border: $borderWidth solid $red__highlight;
+    }
+
+    &:active {
+        background-color: $red__highlight;
+    }
+}
+
+.button--off {
+    color: $green__text--base;
+    background-color: $green--base;
+    border: $borderWidth solid $green--base;
+
+    &:hover {
+        border: $borderWidth solid $green__highlight;
+    }
+
+    &:active {
+        background-color: $green__highlight;
+    }
+}

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stat Item Tests Valid Data Tests should display a valid stat value - HH:MM(A|PM) - MM:SS 1`] = `
+<StatItem
+  deleteHandler={[Function]}
+  entry={
+    Object {
+      "completed": false,
+      "completionTime": 2020-03-01T00:00:00.000Z,
+      "timer": Object {
+        "milliseconds": 0,
+        "minutes": 2,
+        "seconds": 30,
+      },
+    }
+  }
+>
+  <p
+    className="stat__container"
+  >
+    <span
+      className="stat__label"
+    >
+      11:00 AM - 02:30:00
+    </span>
+    <button
+      className="delete__btn"
+      onClick={[Function]}
+    >
+      Delete
+    </button>
+  </p>
+</StatItem>
+`;
