@@ -7,16 +7,14 @@ export interface WarningSoundProps {
 export default function TimerDisplay(props: WarningSoundProps) {
     useEffect(() => {
         if (props.play) {
-            const ele = document.getElementsByClassName(
-                'audio-element'
-            )[0] as any
+            const ele = document.getElementById('audio-element') as any
             ele.play()
         }
     })
 
     return (
         <div>
-            <audio className="audio-element">
+            <audio id="audio-element">
                 <source src="warning.mp3"></source>
             </audio>
         </div>
