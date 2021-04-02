@@ -1,11 +1,14 @@
 import StatItem from '../stat-item/stat-item'
-import { TimeLeft, TimerCompletionState } from '../timer-display/timer-display'
+import { TimeState } from '../timer-display/timer-display'
 import React from 'react'
 import './stats-list.scss'
-import { addZeros } from '../../utilities/number.utils'
+import {
+    printRemainingTimeFromMilliseconds,
+    tallyMilliseconds,
+} from '../../utilities/time.utils'
 
 export interface StatsListProps {
-    history: Array<TimerCompletionState>
+    history: Array<TimeState>
     deleteCallBack: Function
 }
 
@@ -14,9 +17,6 @@ export default class StatsList extends React.Component<StatsListProps> {
         super(props)
         this.displayHistory = this.displayHistory.bind(this)
         this.displayTotal = this.displayTotal.bind(this)
-        this.calculateTimerMilliseconds = this.calculateTimerMilliseconds.bind(
-            this
-        )
     }
 
     displayHistory(): boolean {
@@ -26,30 +26,16 @@ export default class StatsList extends React.Component<StatsListProps> {
     calculateTotalSeconds(): number {
         let totalMilliseconds = 0
         this.props.history.forEach(
-            (item) =>
-                (totalMilliseconds += this.calculateTimerMilliseconds(
-                    item.timer
-                ))
+            (item) => (totalMilliseconds += tallyMilliseconds(item.timeleft))
         )
         return totalMilliseconds
     }
 
-    calculateTimerMilliseconds(timer: TimeLeft): number {
-        return (
-            timer.milliseconds +
-            timer.seconds * 1000 +
-            timer.minutes * 60 * 1000
-        )
-    }
-
     displayTotal(): string {
         if (this.displayHistory()) {
-            const totalMilliseconds = this.calculateTotalSeconds()
-            return `${addZeros(
-                Math.floor((totalMilliseconds / 1000 / 60) % 60)
-            )}:${addZeros(
-                Math.floor((totalMilliseconds / 1000) % 60)
-            )}:${addZeros(Math.floor(totalMilliseconds % 100))}`
+            return printRemainingTimeFromMilliseconds(
+                this.calculateTotalSeconds()
+            )
         } else {
             return 'None'
         }
@@ -61,7 +47,7 @@ export default class StatsList extends React.Component<StatsListProps> {
                 <div className="history__list">
                     {this.displayHistory() ? (
                         this.props.history.map(
-                            (item: TimerCompletionState, index: number) => (
+                            (item: TimeState, index: number) => (
                                 <StatItem
                                     key={index}
                                     entry={item}

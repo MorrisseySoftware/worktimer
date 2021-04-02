@@ -7,7 +7,11 @@ exports[`Stats List Tests should update the display list when the history prop c
   <div
     className="history__list"
   >
-    NO TIMERS
+    <p
+      className="history__item--centered"
+    >
+      NO TIMERS
+    </p>
   </div>
   <div
     className="history__total"

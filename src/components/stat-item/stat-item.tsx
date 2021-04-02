@@ -1,10 +1,10 @@
-import { TimerCompletionState } from 'components/timer-display/timer-display'
+import { TimeState } from 'components/timer-display/timer-display'
 import React from 'react'
-import { addZeros } from '../../utilities/number.utils'
+import { printClockTime, printRemainingTime } from '../../utilities/time.utils'
 import './stat-item.scss'
 
 export interface StatItemProps {
-    entry: TimerCompletionState
+    entry: TimeState
     deleteHandler: Function
 }
 
@@ -18,21 +18,15 @@ export default class StatItem extends React.Component<StatItemProps> {
 
     displayClock(): string {
         if (this.props?.entry?.completionTime) {
-            return this.props.entry.completionTime.toLocaleTimeString('en-US', {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-            })
+            return printClockTime(this.props.entry.completionTime)
         } else {
             return 'No Clock Time'
         }
     }
 
     displayLapsed(): string {
-        if (this.props?.entry?.timer) {
-            return `${addZeros(this.props.entry.timer.minutes)}:${addZeros(
-                this.props.entry.timer.seconds
-            )}:${addZeros(this.props.entry.timer.milliseconds)}`
+        if (this.props?.entry?.timeleft) {
+            return printRemainingTime(this.props.entry.timeleft)
         }
         return 'No Lapsed Time'
     }
