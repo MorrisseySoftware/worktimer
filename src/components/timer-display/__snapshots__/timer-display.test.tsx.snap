@@ -1,13 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Timer Display Tests should be displayed when isActive is true 1`] = `
-<div
-  className="container "
-/>
+exports[`Timer Display Tests Default State Tests should be hidden by default 1`] = `
+<TimerDisplay
+  completedCallback={[Function]}
+  run={true}
+  timerCallback={[Function]}
+>
+  <div />
+</TimerDisplay>
 `;
 
-exports[`Timer Display Tests should be hidden when isActive is false 1`] = `
-<div
-  className="container completed"
-/>
+exports[`Timer Display Tests State Tests should be displayed when run is true 1`] = `
+<TimerDisplay
+  completedCallback={[Function]}
+  run={true}
+  timerCallback={[Function]}
+>
+  <div />
+</TimerDisplay>
 `;

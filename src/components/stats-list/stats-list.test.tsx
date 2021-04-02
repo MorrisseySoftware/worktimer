@@ -2,23 +2,20 @@ import React from 'react'
 import { act, create, ReactTestRenderer } from 'react-test-renderer'
 import { shallow, mount, render } from 'enzyme'
 import StatsList from './stats-list'
-import {
-    TimeLeft,
-    TimerCompletionState,
-} from 'components/timer-display/timer-display'
+import { TimeState } from 'components/timer-display/timer-display'
+import { TimeLeft } from 'utilities/time.utils'
 
 describe('Stats List Tests', () => {
     it('should update the display list when the history prop changes', () => {
         const historyItems = [
             {
-                timer: {
+                timeleft: {
                     minutes: 15,
                     seconds: 27,
                     milliseconds: 75,
                 } as TimeLeft,
                 completionTime: new Date(2019, 1, 1, 7, 11, 0, 0),
-                completed: false,
-            } as TimerCompletionState,
+            } as TimeState,
         ]
         let component: ReactTestRenderer = {} as ReactTestRenderer
         act(() => {

@@ -2,30 +2,31 @@ import React from 'react'
 import { act, create, ReactTestRenderer } from 'react-test-renderer'
 import { shallow, mount, render } from 'enzyme'
 import TimerDisplay from './timer-display'
+import toJson from 'enzyme-to-json'
 
 describe('Timer Display Tests', () => {
     describe('Default State Tests', () => {
         it('should be hidden by default', () => {
-            let component = create(
+            let component = mount(
                 <TimerDisplay
                     run={true}
                     timerCallback={() => {}}
                     completedCallback={() => {}}
                 />
             )
-            expect(component.toJSON()).toMatchSnapshot()
+            expect(toJson(component)).toMatchSnapshot()
         })
     })
     describe('State Tests', () => {
         it('should be displayed when run is true', () => {
-            let component = create(
+            let component = mount(
                 <TimerDisplay
                     run={true}
                     timerCallback={() => {}}
                     completedCallback={() => {}}
                 />
             )
-            expect(component.toJSON()).toMatchSnapshot()
+            expect(toJson(component)).toMatchSnapshot()
         })
     })
     describe('Timer Styling Tests', () => {

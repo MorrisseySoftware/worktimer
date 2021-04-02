@@ -1,9 +1,7 @@
 import './App.scss'
 import React from 'react'
 import ToggleButton from '../toggle-button/toggle-button'
-import TimerDisplay, {
-    TimerCompletionState,
-} from '../timer-display/timer-display'
+import TimerDisplay, { TimeState } from '../timer-display/timer-display'
 import WarningSound from '../warning/warning'
 import StatsList from '../stats-list/stats-list'
 
@@ -13,7 +11,7 @@ export interface AppState {
     startTimer: boolean
     completionTime: Date
     soundWarning: boolean
-    timerHistory: Array<TimerCompletionState>
+    timerHistory: Array<TimeState>
 }
 
 export default class App extends React.Component<AppProps, AppState> {
@@ -43,7 +41,7 @@ export default class App extends React.Component<AppProps, AppState> {
         })
     }
 
-    completeTimer(item: TimerCompletionState) {
+    completeTimer(item: TimeState) {
         this.setState({
             ...this.state,
             timerHistory: [...this.state.timerHistory, item],
@@ -51,7 +49,7 @@ export default class App extends React.Component<AppProps, AppState> {
         })
     }
 
-    deleteStatItem(item: TimerCompletionState) {
+    deleteStatItem(item: TimeState) {
         this.setState({
             ...this.state,
             timerHistory: [
@@ -68,9 +66,9 @@ export default class App extends React.Component<AppProps, AppState> {
                     clickHandler={this.timerSet}
                 />
                 <TimerDisplay
-                    startTimer={this.state.startTimer}
-                    completionTime={this.state.completionTime}
-                    completionCallback={this.completeTimer}
+                    run={this.state.startTimer}
+                    completedCallback={this.completeTimer}
+                    timerCallback={this.completeTimer}
                 />
                 <StatsList
                     history={this.state.timerHistory}

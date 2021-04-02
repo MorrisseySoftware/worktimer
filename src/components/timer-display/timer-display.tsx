@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react'
+import { TimeLeft } from 'utilities/time.utils'
 import { addZeros } from '../../utilities/number.utils'
 import './timer-display.scss'
 
-export interface TimeLeft {
-    minutes: number
-    seconds: number
-    milliseconds: number
+export enum TimerDisplayState {
+    DEFAULT = 0,
+    // STARTED,
+    // COMPLETED,
+    // STOPPED,
 }
 
-export interface TimerCompletionState {
-    timer: TimeLeft
+export interface TimeState {
+    timeleft: TimeLeft
     completionTime: Date
-    completed: boolean
+}
+
+export interface TimerProcessState {
+    displayed: boolean
+    // completed: boolean
+    // timer: TimeState
 }
 
 export interface TimerDisplayProps {
@@ -21,6 +28,20 @@ export interface TimerDisplayProps {
 }
 
 export default function TimerDisplay(props: TimerDisplayProps) {
+    const [timerState, setTimerState] = useState({
+        displayed: false,
+        // completed: false,
+        // timer: {
+        //     timeleft: {
+        //         minutes: 0,
+        //         seconds: 0,
+        //         milliseconds: 0
+        //     },
+        //     completionTime: new Date(Date.now())
+        // } as TimeState
+    } as TimerProcessState)
+    // const [displayState, setDisplayState] = useState(TimerDisplayState.DEFAULT)
+
     // const setTimeLeft = (completionTime: Date): TimeLeft => {
     //     let difference = +completionTime - +new Date(Date.now())
     //     if (difference > 0) {
@@ -42,8 +63,6 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     //     seconds: 0,
     //     milliseconds: 0,
     // } as TimeLeft)
-
-    // const [shown, setShown] = useState(false)
 
     // const [timerComplete, setTimerComplete] = useState(true)
 
@@ -90,36 +109,32 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     // })
 
     // const stateClassName = () => {
-    //     if (stopTimer()) {
+    //     if (timerState.completed) {
     //         return 'completed'
     //     }
-    //     if (timer.minutes < 5) {
+    //     if (timerState.timer.timeleft.minutes < 5) {
     //         return 'warning'
     //     }
     //     return ''
     // }
 
-    return (
-        <div>
-            {
-                // <div className={'container ' + stateClassName()}>
-                //     {shown ? (
-                //         <div className={'timer__container--base'}>
-                //             <p className={'timer__label'}>Time remaining</p>
-                //             <p className={'timer'}>
-                //                 {addZeros(timer.minutes)}
-                //                 {':'}
-                //                 {addZeros(timer.seconds)}
-                //                 {':'}
-                //                 {addZeros(timer.milliseconds)}
-                //             </p>
-                //             <p className={'completion__label'}>
-                //                 Completion Time:{' '}
-                //                 {props.completionTime.toLocaleTimeString()}
-                //             </p>
-                //         </div>
-                //     ) : null
-            }
-        </div>
-    )
+    // <div className={'container ' + stateClassName()}>
+    //         {timerState.displayed ? (
+    //             <div className={'timer__container--base'}>
+    //                 <p className={'timer__label'}>Time remaining</p>
+    //                 <p className={'timer'}>
+    //                     {addZeros(timer.minutes)}
+    //                     {':'}
+    //                     {addZeros(timer.seconds)}
+    //                     {':'}
+    //                     {addZeros(timer.milliseconds)}
+    //                 </p>
+    //                 <p className={'completion__label'}>
+    //                     Completion Time:{' '}
+    //                     {timerState.timer.completionTime.toLocaleTimeString()}
+    //                 </p>
+    //             </div>
+    //         ) : null}
+
+    return <div></div>
 }
