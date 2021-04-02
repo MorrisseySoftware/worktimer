@@ -22,7 +22,6 @@ describe('Toggle Button Tests', () => {
         })
         expect(component.toJSON()).toMatchSnapshot()
     })
-
     it('should call a click handler when the toggle button is clicked', () => {
         var testState = ''
         var testHandler = () => {

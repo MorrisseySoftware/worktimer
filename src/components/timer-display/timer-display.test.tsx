@@ -4,35 +4,41 @@ import { shallow, mount, render } from 'enzyme'
 import TimerDisplay from './timer-display'
 
 describe('Timer Display Tests', () => {
-    it('should be hidden when isActive is false', () => {
-        let component = create(
-            <TimerDisplay
-                startTimer={false}
-                completionTime={new Date()}
-                completionCallback={() => {}}
-            />
-        )
-        expect(component.toJSON()).toMatchSnapshot()
+    describe('Default State Tests', () => {
+        it('should be hidden by default', () => {
+            let component = create(
+                <TimerDisplay
+                    run={true}
+                    timerCallback={() => {}}
+                    completedCallback={() => {}}
+                />
+            )
+            expect(component.toJSON()).toMatchSnapshot()
+        })
     })
-    it('should be displayed when isActive is true', () => {
-        let component = create(
-            <TimerDisplay
-                startTimer={true}
-                completionTime={new Date(2020, 1, 1, 1, 0, 0, 0)}
-                completionCallback={() => {}}
-            />
-        )
-        expect(component.toJSON()).toMatchSnapshot()
+    describe('State Tests', () => {
+        it('should be displayed when run is true', () => {
+            let component = create(
+                <TimerDisplay
+                    run={true}
+                    timerCallback={() => {}}
+                    completedCallback={() => {}}
+                />
+            )
+            expect(component.toJSON()).toMatchSnapshot()
+        })
     })
-    it('should be render the display green when the timer is greater than 5 mins', () => {
-        const component = shallow(
-            <TimerDisplay
-                startTimer={true}
-                completionTime={new Date(2020, 1, 1, 1, 0, 0, 0)}
-                completionCallback={() => {}}
-            />
-        )
-        component.find('button')
-        expect(component.find('button')).toBeDefined()
+    describe('Timer Styling Tests', () => {
+        it('should be render the display green when the timer is greater than 5 mins', () => {
+            const component = shallow(
+                <TimerDisplay
+                    run={true}
+                    timerCallback={() => {}}
+                    completedCallback={() => {}}
+                />
+            )
+            component.find('button')
+            expect(component.find('button')).toBeDefined()
+        })
     })
 })
