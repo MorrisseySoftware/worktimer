@@ -22,11 +22,15 @@ describe('Stats List Tests', () => {
         ]
         let component: ReactTestRenderer = {} as ReactTestRenderer
         act(() => {
-            component = create(<StatsList history={[]} />)
+            component = create(
+                <StatsList history={[]} deleteCallBack={() => {}} />
+            )
         })
         expect(component.toJSON()).toMatchSnapshot()
         act(() => {
-            component.update(<StatsList history={historyItems} />)
+            component.update(
+                <StatsList history={historyItems} deleteCallBack={() => {}} />
+            )
         })
         expect(component.toJSON()).toMatchSnapshot()
     })

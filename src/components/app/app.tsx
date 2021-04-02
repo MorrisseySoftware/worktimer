@@ -28,6 +28,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
         this.timerSet = this.timerSet.bind(this)
         this.completeTimer = this.completeTimer.bind(this)
+        this.deleteStatItem = this.deleteStatItem.bind(this)
     }
 
     timerSet() {
@@ -50,6 +51,15 @@ export default class App extends React.Component<AppProps, AppState> {
         })
     }
 
+    deleteStatItem(item: TimerCompletionState) {
+        this.setState({
+            ...this.state,
+            timerHistory: [
+                ...this.state.timerHistory.filter((x) => x !== item),
+            ],
+        })
+    }
+
     render() {
         return (
             <div className={'container'}>
@@ -62,7 +72,10 @@ export default class App extends React.Component<AppProps, AppState> {
                     completionTime={this.state.completionTime}
                     completionCallback={this.completeTimer}
                 />
-                <StatsList history={this.state.timerHistory} />
+                <StatsList
+                    history={this.state.timerHistory}
+                    deleteCallBack={this.deleteStatItem}
+                />
                 <WarningSound play={this.state.soundWarning} />
             </div>
         )

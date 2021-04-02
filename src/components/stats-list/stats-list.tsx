@@ -6,6 +6,7 @@ import { addZeros } from '../../utilities/number.utils'
 
 export interface StatsListProps {
     history: Array<TimerCompletionState>
+    deleteCallBack: Function
 }
 
 export default class StatsList extends React.Component<StatsListProps> {
@@ -64,7 +65,7 @@ export default class StatsList extends React.Component<StatsListProps> {
                                 <StatItem
                                     key={index}
                                     entry={item}
-                                    deleteHandler={() => {}}
+                                    deleteHandler={this.props.deleteCallBack}
                                 />
                             )
                         )
