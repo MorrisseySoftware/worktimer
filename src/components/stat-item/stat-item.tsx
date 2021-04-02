@@ -1,6 +1,7 @@
 import { TimerCompletionState } from 'components/timer-display/timer-display'
 import React from 'react'
 import { addZeros } from '../../utilities/number.utils'
+import './stat-item.scss'
 
 export interface StatItemProps {
     entry: TimerCompletionState

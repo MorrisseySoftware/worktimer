@@ -1,0 +1,37 @@
+.stat__container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin: 3px 0;
+}
+
+.stat__label {
+    flex: 1;
+    font-size: 12pt;
+    font-weight: bold;
+    color: #6b89b7;
+}
+
+.delete__btn {
+    flex: 0;
+    border: none;
+    background-color: transparent;
+    font-size: 9pt;
+    text-decoration: underline;
+    color: #7d2828;
+    font-weight: bold;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #7d2828;
+        border-radius: 3px;
+        color: white;
+        text-decoration: none;
+    }
+    &:active {
+        background-color: #642929;
+    }
+}

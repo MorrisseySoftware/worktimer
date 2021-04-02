@@ -58,17 +58,19 @@ export default class StatsList extends React.Component<StatsListProps> {
         return (
             <div className="history__container">
                 <div className="history__list">
-                    {this.displayHistory()
-                        ? this.props.history.map(
-                              (item: TimerCompletionState, index: number) => (
-                                  <StatItem
-                                      key={index}
-                                      entry={item}
-                                      deleteHandler={() => {}}
-                                  />
-                              )
-                          )
-                        : 'NO TIMERS'}
+                    {this.displayHistory() ? (
+                        this.props.history.map(
+                            (item: TimerCompletionState, index: number) => (
+                                <StatItem
+                                    key={index}
+                                    entry={item}
+                                    deleteHandler={() => {}}
+                                />
+                            )
+                        )
+                    ) : (
+                        <p className="history__item--centered">NO TIMERS</p>
+                    )}
                 </div>
                 <div className="history__total">
                     Total Time - {this.displayTotal()}
