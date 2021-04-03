@@ -6,6 +6,22 @@ export interface TimeLeft {
 export const tallyMilliseconds = (timer: TimeLeft): number => {
     return timer.milliseconds + timer.seconds * 1000 + timer.minutes * 60 * 1000
 }
+export const timeLeftFromDate = (date: Date): TimeLeft => {
+    let difference = +date - +new Date()
+    if (difference > 0) {
+        const result = {
+            minutes: Math.floor((difference / 1000 / 60) % 60),
+            seconds: Math.floor((difference / 1000) % 60),
+            milliseconds: Math.floor(difference % 100),
+        } as TimeLeft
+        return result
+    }
+    return {
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+    }
+}
 export const printRemainingTime = (val: TimeLeft): string => {
     return `${addZeros(val.minutes)}:${addZeros(val.seconds)}:${addZeros(
         val.milliseconds

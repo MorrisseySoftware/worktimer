@@ -3,11 +3,11 @@ import { create } from 'react-test-renderer'
 import { shallow, mount } from 'enzyme'
 import toJson from 'enzyme-to-json'
 import App from './app'
-import { mockDateNow } from '../../dev/test.utls'
+import { mockDate_Static_Past } from '../../dev/test.utls'
 
 describe('App Tests', () => {
     beforeEach(() => {
-        mockDateNow()
+        mockDate_Static_Past()
     })
     describe('Default State Tests', () => {
         it('should display valid html', () => {

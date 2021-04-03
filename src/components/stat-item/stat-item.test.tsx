@@ -10,6 +10,7 @@ describe('Stat Item Tests', () => {
     describe('Valid Data Tests', () => {
         it('should display a valid stat value - HH:MM(A|PM) - MM:SS', () => {
             const statVal = {
+                origin: {} as TimeLeft,
                 completionTime: new Date(2020, 2, 1, 11, 0, 0),
                 timeleft: {
                     minutes: 2,

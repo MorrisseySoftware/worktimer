@@ -1,17 +1,27 @@
 import React from 'react'
 import { act, create, ReactTestRenderer } from 'react-test-renderer'
 import { shallow, mount, render } from 'enzyme'
-import TimerDisplay from './timer-display'
+import TimerDisplay, { TimeState } from './timer-display'
 import toJson from 'enzyme-to-json'
+import {
+    mockDate_Add10Mins,
+    mockDate_Add1Mins,
+    mockDate_Static_Past,
+} from '../../dev/test.utls'
+import { printClockTime, printRemainingTime } from '../../utilities/time.utils'
 
 describe('-Timer Display Tests-', () => {
+    beforeEach(() => {
+        mockDate_Static_Past()
+    })
     describe('-Prop Tests-', () => {
         it('-should be hidden when run is false-', () => {
             let component = mount(
                 <TimerDisplay
                     run={false}
+                    completionTime={new Date(Date.now())}
                     timerCallback={() => {}}
-                    completedCallback={() => {}}
+                    completeCallback={() => {}}
                 />
             )
             expect(toJson(component)).toMatchSnapshot()
@@ -20,8 +30,9 @@ describe('-Timer Display Tests-', () => {
             let component = mount(
                 <TimerDisplay
                     run={true}
+                    completionTime={new Date(Date.now())}
                     timerCallback={() => {}}
-                    completedCallback={() => {}}
+                    completeCallback={() => {}}
                 />
             )
             expect(toJson(component)).toMatchSnapshot()
@@ -30,42 +41,62 @@ describe('-Timer Display Tests-', () => {
             let component = mount(
                 <TimerDisplay
                     run={true}
+                    completionTime={new Date(Date.now())}
                     timerCallback={() => {}}
-                    completedCallback={() => {}}
+                    completeCallback={() => {}}
                 />
             )
             component.setProps({ run: false })
             expect(toJson(component)).toMatchSnapshot()
         })
         it('-should trigger timerCallback when run value changes from true to false-', () => {
+            mockDate_Add10Mins()
             let result = 'failed'
-            const callbk = () => {
-                result = 'passed'
+            const callbk = (val: TimeState) => {
+                result = printRemainingTime(val.timeleft)
             }
             const component = mount(
                 <TimerDisplay
                     run={true}
+                    completionTime={new Date(Date.now())}
                     timerCallback={callbk}
-                    completedCallback={() => {}}
+                    completeCallback={() => {}}
                 />
             )
             component.setProps({ run: false })
-            expect(result).toBe('passed')
+            expect(result).toBe('00:00:00')
         })
         it('-should not trigger timerCallback when run value changes from false to true-', () => {
+            mockDate_Add1Mins()
             let result = 'passed'
-            const callbk = () => {
-                result = 'failed'
+            const callbk = (val: TimeState) => {
+                result = printRemainingTime(val.timeleft)
             }
             const component = mount(
                 <TimerDisplay
                     run={false}
+                    completionTime={new Date(Date.now())}
                     timerCallback={callbk}
-                    completedCallback={() => {}}
+                    completeCallback={() => {}}
                 />
             )
             component.setProps({ run: true })
             expect(result).toBe('passed')
+        })
+        it('-should trigger completeCallback when completionTime has passed-', () => {
+            let result = 'failed'
+            const callbk = (val: TimeState) => {
+                result = printRemainingTime(val.timeleft)
+            }
+            const component = mount(
+                <TimerDisplay
+                    run={true}
+                    completionTime={new Date(Date.now())}
+                    timerCallback={() => {}}
+                    completeCallback={callbk}
+                />
+            )
+            expect(result).toBe('00:00:00')
         })
     })
     // describe('Timer Styling Tests', () => {

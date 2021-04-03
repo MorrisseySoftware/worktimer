@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { TimeLeft } from 'utilities/time.utils'
-import { addZeros } from '../../utilities/number.utils'
+import {
+    printClockTime,
+    printRemainingTime,
+    TimeLeft,
+    timeLeftFromDate,
+} from '../../utilities/time.utils'
 import './timer-display.scss'
 
 export enum TimerDisplayState {
     DEFAULT = 0,
     START,
     STOP,
-    // COMPLETE,
+    COMPLETE,
 }
 
 export interface TimeState {
+    origin: TimeLeft
     timeleft: TimeLeft
     completionTime: Date
 }
@@ -18,162 +23,166 @@ export interface TimeState {
 export interface TimerProcessState {
     displayed: boolean
     running: boolean
-    // completed: boolean
-    // timer: TimeState
+    timer: TimeState
 }
 
 export interface TimerDisplayProps {
     run: boolean
+    completionTime: Date
     timerCallback: Function
-    completedCallback: Function
+    completeCallback: Function
 }
 
 export default function TimerDisplay(props: TimerDisplayProps) {
     const [timerState, setTimerState] = useState({
         displayed: false,
         running: false,
-        // completed: false,
-        // timer: {
-        //     timeleft: {
-        //         minutes: 0,
-        //         seconds: 0,
-        //         milliseconds: 0
-        //     },
-        //     completionTime: new Date(Date.now())
-        // } as TimeState
+        timer: {
+            origin: timeLeftFromDate(props.completionTime),
+            timeleft: timeLeftFromDate(props.completionTime),
+            completionTime: props.completionTime,
+        } as TimeState,
     } as TimerProcessState)
-    const [displayState, setDisplayState] = useState(TimerDisplayState.DEFAULT)
+    let displayState = TimerDisplayState.DEFAULT
 
-    // const setTimeLeft = (completionTime: Date): TimeLeft => {
-    //     let difference = +completionTime - +new Date(Date.now())
-    //     if (difference > 0) {
-    //         return {
-    //             minutes: Math.floor((difference / 1000 / 60) % 60),
-    //             seconds: Math.floor((difference / 1000) % 60),
-    //             milliseconds: Math.floor(difference % 100),
-    //         } as TimeLeft
-    //     }
-    //     return {
-    //         minutes: 0,
-    //         seconds: 0,
-    //         milliseconds: 0,
-    //     }
-    // }
+    const isComplete = (): boolean =>
+        !!(
+            timerState.timer.timeleft.minutes +
+                timerState.timer.timeleft.seconds +
+                timerState.timer.timeleft.milliseconds ===
+            0
+        )
 
-    // const [timer, setTimer] = useState({
-    //     minutes: 60,
-    //     seconds: 0,
-    //     milliseconds: 0,
-    // } as TimeLeft)
-
-    // const [timerComplete, setTimerComplete] = useState(true)
-
-    // const isComplete = () =>
-    //     !!(timer.minutes + timer.seconds + timer.milliseconds === 0)
-
-    // const stopTimer = () => isComplete() || !props.startTimer
-
-    // const invertTimer = (timer: TimeLeft) => {
-    //     return {
-    //         minutes: 59 - timer.minutes,
-    //         seconds: 59 - timer.seconds,
-    //         milliseconds: 100 - timer.milliseconds,
-    //     } as TimeLeft
-    // }
-
-    const _checkRunPropValue = () => {
-        if (!timerState.displayed && props.run) {
-            setTimerState({
-                ...timerState,
-                displayed: props.run,
-            })
+    const _checkRunPropValue = (
+        _timerState: TimerProcessState
+    ): TimerProcessState => {
+        _timerState = {
+            ..._timerState,
+            displayed: props.run || _timerState.displayed,
         }
-        if (props.run !== timerState.running) {
-            setTimerState({
-                ...timerState,
+        if (props.run !== _timerState.running) {
+            _timerState = {
+                ..._timerState,
                 running: props.run,
-            })
-            if (props.run) {
-                setDisplayState(TimerDisplayState.START)
-            } else if (timerState.displayed) {
-                setDisplayState(TimerDisplayState.STOP)
             }
+            if (props.run) {
+                displayState = TimerDisplayState.START
+            } else if (timerState.displayed) {
+                displayState = TimerDisplayState.STOP
+            }
+        }
+        return _timerState
+    }
+
+    const _checkCompletion = (
+        _timerState: TimerProcessState
+    ): TimerProcessState => {
+        if (_timerState.running && isComplete()) {
+            _timerState = {
+                ..._timerState,
+                running: false,
+            }
+            displayState = TimerDisplayState.COMPLETE
+        }
+        return _timerState
+    }
+
+    const _buildTimerCompleteValue = (): TimeState => {
+        return {
+            origin: {} as TimeLeft,
+            timeleft: {
+                minutes:
+                    timerState.timer.origin.minutes -
+                    timerState.timer.timeleft.minutes,
+                seconds:
+                    timerState.timer.origin.seconds -
+                    timerState.timer.timeleft.seconds,
+                milliseconds:
+                    timerState.timer.origin.milliseconds -
+                    timerState.timer.timeleft.milliseconds,
+            } as TimeLeft,
+            completionTime: new Date(Date.now()),
+        }
+    }
+
+    const _stopInterval = (interval: NodeJS.Timer) => {
+        if (interval) {
+            clearInterval(interval)
         }
     }
 
     useEffect(() => {
-        _checkRunPropValue()
+        let _counter: any
+        let _timerState = {
+            ...timerState,
+        }
+        _timerState = _checkRunPropValue(_timerState)
+        _timerState = _checkCompletion(_timerState)
         switch (displayState) {
             case TimerDisplayState.START:
-                setDisplayState(TimerDisplayState.DEFAULT)
+                _timerState = {
+                    ..._timerState,
+                    timer: {
+                        completionTime: props.completionTime,
+                        origin: timeLeftFromDate(props.completionTime),
+                        timeleft: timeLeftFromDate(props.completionTime),
+                    } as TimeState,
+                }
+                _counter = setInterval(() => {
+                    setTimerState({
+                        ..._timerState,
+                        timer: {
+                            ..._timerState.timer,
+                            timeleft: timeLeftFromDate(
+                                _timerState.timer.completionTime
+                            ),
+                        },
+                    })
+                }, 50)
+                displayState = TimerDisplayState.DEFAULT
                 break
             case TimerDisplayState.STOP:
-                props.timerCallback()
-                setDisplayState(TimerDisplayState.DEFAULT)
+                props.timerCallback(_buildTimerCompleteValue())
+                _stopInterval(_counter)
+                displayState = TimerDisplayState.DEFAULT
+                break
+            case TimerDisplayState.COMPLETE:
+                props.completeCallback(_buildTimerCompleteValue())
+                _stopInterval(_counter)
+                displayState = TimerDisplayState.DEFAULT
                 break
             default:
                 break
         }
-        //     let counter: any = undefined
-        //     if (!shown) {
-        //         setShown(props.startTimer)
-        //     }
-        //     if (shown) {
-        //         if (stopTimer()) {
-        //             if (!timerComplete) {
-        //                 props.completionCallback({
-        //                     timer: invertTimer(timer),
-        //                     completionTime: props.completionTime,
-        //                     completed: isComplete(),
-        //                 } as TimerCompletionState)
-        //                 setTimerComplete(true)
-        //             }
-        //         } else {
-        //             counter = setTimeout(() => {
-        //                 setTimer(setTimeLeft(props.completionTime))
-        //             }, 100)
-        //             setTimerComplete(false)
-        //         }
-        //     }
-        //     return () => {
-        //         if (counter) {
-        //             clearTimeout(counter)
-        //         }
-        //     }
-    })
+        setTimerState(_timerState)
+        return () => {
+            _stopInterval(_counter)
+        }
+    }, [props.run])
 
-    // const stateClassName = () => {
-    //     if (timerState.completed) {
-    //         return 'completed'
-    //     }
-    //     if (timerState.timer.timeleft.minutes < 5) {
-    //         return 'warning'
-    //     }
-    //     return ''
-    // }
-
-    // <div className={'container ' + stateClassName()}>
-    //         {timerState.displayed ? (
-    //             <div className={'timer__container--base'}>
-    //                 <p className={'timer__label'}>Time remaining</p>
-    //                 <p className={'timer'}>
-    //                     {addZeros(timer.minutes)}
-    //                     {':'}
-    //                     {addZeros(timer.seconds)}
-    //                     {':'}
-    //                     {addZeros(timer.milliseconds)}
-    //                 </p>
-    //                 <p className={'completion__label'}>
-    //                     Completion Time:{' '}
-    //                     {timerState.timer.completionTime.toLocaleTimeString()}
-    //                 </p>
-    //             </div>
-    //         ) : null}
+    const _stateClassName = () => {
+        if (isComplete()) {
+            return 'completed'
+        }
+        if (timerState.timer.timeleft.minutes < 5) {
+            return 'warning'
+        }
+        return ''
+    }
 
     return (
-        <div>
+        <div className={'container ' + _stateClassName()}>
             {timerState.displayed ? (
-                <div className={'timer__container--base'}></div>
+                <div className={'timer__container--base'}>
+                    <p className={'timer__label'}>Time remaining</p>
+                    <p className={'timer'}>
+                        {printRemainingTime(timerState.timer.timeleft)}
+                    </p>
+                    <p className={'completion__label'}>
+                        Completion Time:{' '}
+                        {printClockTime(timerState.timer.completionTime)}
+                    </p>
+                </div>
             ) : null}
         </div>
     )

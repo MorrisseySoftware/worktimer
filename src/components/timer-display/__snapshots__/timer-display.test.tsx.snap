@@ -2,38 +2,83 @@
 
 exports[`-Timer Display Tests- -Prop Tests- -should be displayed when run is true- 1`] = `
 <TimerDisplay
-  completedCallback={[Function]}
+  completeCallback={[Function]}
+  completionTime={2019-05-14T11:01:58.135Z}
   run={true}
   timerCallback={[Function]}
 >
-  <div>
+  <div
+    className="container completed"
+  >
     <div
       className="timer__container--base"
-    />
+    >
+      <p
+        className="timer__label"
+      >
+        Time remaining
+      </p>
+      <p
+        className="timer"
+      >
+        00:00:00
+      </p>
+      <p
+        className="completion__label"
+      >
+        Completion Time:
+         
+        21:01:58
+      </p>
+    </div>
   </div>
 </TimerDisplay>
 `;
 
 exports[`-Timer Display Tests- -Prop Tests- -should be hidden when run is false- 1`] = `
 <TimerDisplay
-  completedCallback={[Function]}
+  completeCallback={[Function]}
+  completionTime={2019-05-14T11:01:58.135Z}
   run={false}
   timerCallback={[Function]}
 >
-  <div />
+  <div
+    className="container completed"
+  />
 </TimerDisplay>
 `;
 
 exports[`-Timer Display Tests- -Prop Tests- -should not be hidden after its been displayed- 1`] = `
 <TimerDisplay
-  completedCallback={[Function]}
+  completeCallback={[Function]}
+  completionTime={2019-05-14T11:01:58.135Z}
   run={false}
   timerCallback={[Function]}
 >
-  <div>
+  <div
+    className="container completed"
+  >
     <div
       className="timer__container--base"
-    />
+    >
+      <p
+        className="timer__label"
+      >
+        Time remaining
+      </p>
+      <p
+        className="timer"
+      >
+        00:00:00
+      </p>
+      <p
+        className="completion__label"
+      >
+        Completion Time:
+         
+        21:01:58
+      </p>
+    </div>
   </div>
 </TimerDisplay>
 `;

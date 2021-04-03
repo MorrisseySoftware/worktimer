@@ -27,6 +27,7 @@ export default class App extends React.Component<AppProps, AppState> {
         this.timerSet = this.timerSet.bind(this)
         this.completeTimer = this.completeTimer.bind(this)
         this.deleteStatItem = this.deleteStatItem.bind(this)
+        this.timerBand = this.timerBand.bind(this)
     }
 
     timerSet() {
@@ -58,6 +59,12 @@ export default class App extends React.Component<AppProps, AppState> {
         })
     }
 
+    timerBand(): Date {
+        return new Date(
+            new Date().setHours(new Date().getHours() + 1).valueOf()
+        )
+    }
+
     render() {
         return (
             <div className={'container'}>
@@ -67,7 +74,8 @@ export default class App extends React.Component<AppProps, AppState> {
                 />
                 <TimerDisplay
                     run={this.state.startTimer}
-                    completedCallback={this.completeTimer}
+                    completionTime={this.timerBand()}
+                    completeCallback={this.completeTimer}
                     timerCallback={this.completeTimer}
                 />
                 <StatsList
