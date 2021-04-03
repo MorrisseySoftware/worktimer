@@ -79,34 +79,40 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     //     } as TimeLeft
     // }
 
-    // useEffect(() => {
-    //     let counter: any = undefined
-    //     if (!shown) {
-    //         setShown(props.startTimer)
-    //     }
-    //     if (shown) {
-    //         if (stopTimer()) {
-    //             if (!timerComplete) {
-    //                 props.completionCallback({
-    //                     timer: invertTimer(timer),
-    //                     completionTime: props.completionTime,
-    //                     completed: isComplete(),
-    //                 } as TimerCompletionState)
-    //                 setTimerComplete(true)
-    //             }
-    //         } else {
-    //             counter = setTimeout(() => {
-    //                 setTimer(setTimeLeft(props.completionTime))
-    //             }, 100)
-    //             setTimerComplete(false)
-    //         }
-    //     }
-    //     return () => {
-    //         if (counter) {
-    //             clearTimeout(counter)
-    //         }
-    //     }
-    // })
+    useEffect(() => {
+        if (props.run !== timerState.displayed) {
+            setTimerState({
+                ...timerState,
+                displayed: props.run,
+            })
+        }
+        //     let counter: any = undefined
+        //     if (!shown) {
+        //         setShown(props.startTimer)
+        //     }
+        //     if (shown) {
+        //         if (stopTimer()) {
+        //             if (!timerComplete) {
+        //                 props.completionCallback({
+        //                     timer: invertTimer(timer),
+        //                     completionTime: props.completionTime,
+        //                     completed: isComplete(),
+        //                 } as TimerCompletionState)
+        //                 setTimerComplete(true)
+        //             }
+        //         } else {
+        //             counter = setTimeout(() => {
+        //                 setTimer(setTimeLeft(props.completionTime))
+        //             }, 100)
+        //             setTimerComplete(false)
+        //         }
+        //     }
+        //     return () => {
+        //         if (counter) {
+        //             clearTimeout(counter)
+        //         }
+        //     }
+    })
 
     // const stateClassName = () => {
     //     if (timerState.completed) {
@@ -136,5 +142,11 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     //             </div>
     //         ) : null}
 
-    return <div></div>
+    return (
+        <div>
+            {timerState.displayed ? (
+                <div className={'timer__container--base'}></div>
+            ) : null}
+        </div>
+    )
 }
