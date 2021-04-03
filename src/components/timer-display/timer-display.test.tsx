@@ -4,9 +4,9 @@ import { shallow, mount, render } from 'enzyme'
 import TimerDisplay from './timer-display'
 import toJson from 'enzyme-to-json'
 
-describe('Timer Display Tests', () => {
-    describe('Prop Tests', () => {
-        it('should be hidden when run is false', () => {
+describe('-Timer Display Tests-', () => {
+    describe('-Prop Tests-', () => {
+        it('-should be hidden when run is false-', () => {
             let component = mount(
                 <TimerDisplay
                     run={false}
@@ -16,7 +16,7 @@ describe('Timer Display Tests', () => {
             )
             expect(toJson(component)).toMatchSnapshot()
         })
-        it('should be displayed when run is true', () => {
+        it('-should be displayed when run is true-', () => {
             let component = mount(
                 <TimerDisplay
                     run={true}
@@ -25,6 +25,47 @@ describe('Timer Display Tests', () => {
                 />
             )
             expect(toJson(component)).toMatchSnapshot()
+        })
+        it('-should not be hidden after its been displayed-', () => {
+            let component = mount(
+                <TimerDisplay
+                    run={true}
+                    timerCallback={() => {}}
+                    completedCallback={() => {}}
+                />
+            )
+            component.setProps({ run: false })
+            expect(toJson(component)).toMatchSnapshot()
+        })
+        it('-should trigger timerCallback when run value changes from true to false-', () => {
+            let result = 'failed'
+            const callbk = () => {
+                result = 'passed'
+            }
+            const component = mount(
+                <TimerDisplay
+                    run={true}
+                    timerCallback={callbk}
+                    completedCallback={() => {}}
+                />
+            )
+            component.setProps({ run: false })
+            expect(result).toBe('passed')
+        })
+        it('-should not trigger timerCallback when run value changes from false to true-', () => {
+            let result = 'passed'
+            const callbk = () => {
+                result = 'failed'
+            }
+            const component = mount(
+                <TimerDisplay
+                    run={false}
+                    timerCallback={callbk}
+                    completedCallback={() => {}}
+                />
+            )
+            component.setProps({ run: true })
+            expect(result).toBe('passed')
         })
     })
     // describe('Timer Styling Tests', () => {

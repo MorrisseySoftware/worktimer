@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Timer Display Tests Prop Tests should be displayed when run is true 1`] = `
+exports[`-Timer Display Tests- -Prop Tests- -should be displayed when run is true- 1`] = `
 <TimerDisplay
   completedCallback={[Function]}
   run={true}
@@ -14,12 +14,26 @@ exports[`Timer Display Tests Prop Tests should be displayed when run is true 1`]
 </TimerDisplay>
 `;
 
-exports[`Timer Display Tests Prop Tests should be hidden when run is false 1`] = `
+exports[`-Timer Display Tests- -Prop Tests- -should be hidden when run is false- 1`] = `
 <TimerDisplay
   completedCallback={[Function]}
   run={false}
   timerCallback={[Function]}
 >
   <div />
+</TimerDisplay>
+`;
+
+exports[`-Timer Display Tests- -Prop Tests- -should not be hidden after its been displayed- 1`] = `
+<TimerDisplay
+  completedCallback={[Function]}
+  run={false}
+  timerCallback={[Function]}
+>
+  <div>
+    <div
+      className="timer__container--base"
+    />
+  </div>
 </TimerDisplay>
 `;

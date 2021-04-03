@@ -5,9 +5,9 @@ import './timer-display.scss'
 
 export enum TimerDisplayState {
     DEFAULT = 0,
-    // STARTED,
-    // COMPLETED,
-    // STOPPED,
+    START,
+    STOP,
+    // COMPLETE,
 }
 
 export interface TimeState {
@@ -17,6 +17,7 @@ export interface TimeState {
 
 export interface TimerProcessState {
     displayed: boolean
+    running: boolean
     // completed: boolean
     // timer: TimeState
 }
@@ -30,6 +31,7 @@ export interface TimerDisplayProps {
 export default function TimerDisplay(props: TimerDisplayProps) {
     const [timerState, setTimerState] = useState({
         displayed: false,
+        running: false,
         // completed: false,
         // timer: {
         //     timeleft: {
@@ -40,7 +42,7 @@ export default function TimerDisplay(props: TimerDisplayProps) {
         //     completionTime: new Date(Date.now())
         // } as TimeState
     } as TimerProcessState)
-    // const [displayState, setDisplayState] = useState(TimerDisplayState.DEFAULT)
+    const [displayState, setDisplayState] = useState(TimerDisplayState.DEFAULT)
 
     // const setTimeLeft = (completionTime: Date): TimeLeft => {
     //     let difference = +completionTime - +new Date(Date.now())
@@ -79,12 +81,38 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     //     } as TimeLeft
     // }
 
-    useEffect(() => {
-        if (props.run !== timerState.displayed) {
+    const _checkRunPropValue = () => {
+        if (!timerState.displayed && props.run) {
             setTimerState({
                 ...timerState,
                 displayed: props.run,
             })
+        }
+        if (props.run !== timerState.running) {
+            setTimerState({
+                ...timerState,
+                running: props.run,
+            })
+            if (props.run) {
+                setDisplayState(TimerDisplayState.START)
+            } else if (timerState.displayed) {
+                setDisplayState(TimerDisplayState.STOP)
+            }
+        }
+    }
+
+    useEffect(() => {
+        _checkRunPropValue()
+        switch (displayState) {
+            case TimerDisplayState.START:
+                setDisplayState(TimerDisplayState.DEFAULT)
+                break
+            case TimerDisplayState.STOP:
+                props.timerCallback()
+                setDisplayState(TimerDisplayState.DEFAULT)
+                break
+            default:
+                break
         }
         //     let counter: any = undefined
         //     if (!shown) {
