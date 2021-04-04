@@ -1,55 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stats List Tests should update the display list when the history prop changes 1`] = `
-<div
-  className="history__container"
+<StatsList
+  deleteCallBack={[Function]}
+  history={Array []}
 >
   <div
-    className="history__list"
+    className="history__container"
   >
-    <p
-      className="history__item--centered"
+    <div
+      className="history__list"
     >
-      NO TIMERS
-    </p>
+      <p
+        className="history__item--centered"
+      >
+        NO TIMERS
+      </p>
+    </div>
+    <div
+      className="history__total"
+    >
+      Total Time - 
+      None
+    </div>
   </div>
-  <div
-    className="history__total"
-  >
-    Total Time - 
-    None
-  </div>
-</div>
+</StatsList>
 `;
 
 exports[`Stats List Tests should update the display list when the history prop changes 2`] = `
-<div
-  className="history__container"
+<StatsList
+  deleteCallBack={[Function]}
+  history={
+    Array [
+      Object {
+        "completionTime": 2019-01-31T20:11:00.000Z,
+        "timeleft": Object {
+          "milliseconds": 75,
+          "minutes": 15,
+          "seconds": 27,
+        },
+      },
+    ]
+  }
 >
   <div
-    className="history__list"
+    className="history__container"
   >
-    <p
-      className="stat__container"
+    <div
+      className="history__list"
     >
-      <span
-        className="stat__label"
+      <StatItem
+        deleteHandler={[Function]}
+        entry={
+          Object {
+            "completionTime": 2019-01-31T20:11:00.000Z,
+            "timeleft": Object {
+              "milliseconds": 75,
+              "minutes": 15,
+              "seconds": 27,
+            },
+          }
+        }
+        key="0"
       >
-        07:11 AM - 15:27:75
-      </span>
-      <button
-        className="delete__btn"
-        onClick={[Function]}
-      >
-        Delete
-      </button>
-    </p>
+        <p
+          className="stat__container"
+        >
+          <span
+            className="stat__label"
+          >
+            07:11 AM - 15:27:75
+          </span>
+          <button
+            className="delete__btn"
+            onClick={[Function]}
+          >
+            Delete
+          </button>
+        </p>
+      </StatItem>
+    </div>
+    <div
+      className="history__total"
+    >
+      Total Time - 
+      15:27:75
+    </div>
   </div>
-  <div
-    className="history__total"
-  >
-    Total Time - 
-    15:27:75
-  </div>
-</div>
+</StatsList>
 `;
