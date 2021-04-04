@@ -7,6 +7,7 @@ exports[`Stat Item Tests Valid Data Tests should display a valid stat value - HH
     Object {
       "completed": false,
       "completionTime": 2020-03-01T00:00:00.000Z,
+      "origin": Object {},
       "timeleft": Object {
         "milliseconds": 0,
         "minutes": 2,

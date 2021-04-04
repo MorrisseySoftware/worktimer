@@ -4,6 +4,7 @@ import ToggleButton from '../toggle-button/toggle-button'
 import TimerDisplay, { TimeState } from '../timer-display/timer-display'
 import WarningSound from '../warning/warning'
 import StatsList from '../stats-list/stats-list'
+import { dateReviver } from '../../utilities/json.utils'
 
 export interface AppProps {}
 
@@ -15,13 +16,20 @@ export interface AppState {
 }
 
 export default class App extends React.Component<AppProps, AppState> {
+    STORAGE_KEY = 'WorkTimer'
+
     constructor(props: any) {
         super(props)
+        const historyJson = localStorage.getItem(this.STORAGE_KEY) ?? ''
+        const currentHistory = historyJson
+            ? JSON.parse(historyJson, dateReviver) ?? []
+            : []
+
         this.state = {
             startTimer: false,
             completionTime: new Date(Date.now()),
             soundWarning: false,
-            timerHistory: [],
+            timerHistory: currentHistory,
         }
 
         this.timerSet = this.timerSet.bind(this)
@@ -43,20 +51,24 @@ export default class App extends React.Component<AppProps, AppState> {
     }
 
     completeTimer(item: TimeState) {
+        const newHistory = [...this.state.timerHistory, item]
         this.setState({
             ...this.state,
-            timerHistory: [...this.state.timerHistory, item],
+            timerHistory: newHistory,
             soundWarning: this.state.soundWarning,
         })
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(newHistory))
     }
 
     deleteStatItem(item: TimeState) {
+        const newHistory = [
+            ...this.state.timerHistory.filter((x) => x !== item),
+        ]
         this.setState({
             ...this.state,
-            timerHistory: [
-                ...this.state.timerHistory.filter((x) => x !== item),
-            ],
+            timerHistory: newHistory,
         })
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(newHistory))
     }
 
     timerBand(): Date {

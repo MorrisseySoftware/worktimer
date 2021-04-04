@@ -7,8 +7,20 @@ import {
     mockDate_Static_Future,
     mockDate_Static_Past,
 } from '../../dev/test.utls'
+import { TimeLeft } from 'utilities/time.utils'
+import { TimeState } from 'components/timer-display/timer-display'
 
 describe('App Tests', () => {
+    beforeAll(() => {
+        jest.spyOn(global.Storage.prototype, 'getItem').mockImplementation(
+            (key: string) => {
+                return ''
+            }
+        )
+    })
+    afterAll(() => {
+        ;(global.Storage.prototype.getItem as any).mockReset()
+    })
     beforeEach(() => {
         mockDate_Static_Past()
     })
@@ -79,9 +91,55 @@ describe('App Tests', () => {
             expect(div.text().trim()).toBe('NO TIMERS')
         })
     })
-    // describe('Existing History Default State', () => {
-    //     it('should show existing stats in the stats list.', () => {
-
-    //     })
-    // })
+    describe('Existing History Tests', () => {
+        beforeAll(() => {
+            jest.spyOn(global.Storage.prototype, 'getItem').mockImplementation(
+                (key: string) => {
+                    return JSON.stringify([
+                        {
+                            timeleft: {
+                                minutes: 15,
+                                seconds: 27,
+                                milliseconds: 75,
+                            } as TimeLeft,
+                            completionTime: new Date(2019, 1, 1, 7, 11, 0, 0),
+                        } as TimeState,
+                    ])
+                }
+            )
+        })
+        afterAll(() => {
+            ;(global.Storage.prototype.getItem as any).mockReset()
+        })
+        it('should show existing stats in the stats list.', () => {
+            let component = mount(<App />)
+            const div = component.find('.history__list')
+            expect(div.text().trim()).not.toBe('NO TIMERS')
+        })
+        it('should update localstorage with new stats', () => {
+            const setLocalStorage = jest
+                .spyOn(global.Storage.prototype, 'setItem')
+                .mockImplementation((key: string, value: string) => {
+                    return
+                })
+            let component = mount(<App />)
+            const btn = component.find('button.toggle__btn')
+            btn.simulate('click')
+            btn.simulate('click')
+            expect(setLocalStorage).toHaveBeenCalledTimes(1)
+            setLocalStorage.mockReset()
+        })
+        it('should delete stat from localstorage', () => {
+            const setLocalStorage = jest
+                .spyOn(global.Storage.prototype, 'setItem')
+                .mockImplementation((key: string, value: string) => {
+                    return
+                })
+            let component = mount(<App />)
+            const del_btn = component.find('.delete__btn')
+            del_btn.simulate('click')
+            expect(setLocalStorage).toHaveBeenCalledTimes(1)
+            setLocalStorage.mockReset()
+        })
+    })
 })
