@@ -10,7 +10,9 @@ exports[`App Tests Default State Tests should display valid html 1`] = `
   >
     START TIMER
   </button>
-  <div />
+  <div
+    className="container completed"
+  />
   <div
     className="history__container"
   >
