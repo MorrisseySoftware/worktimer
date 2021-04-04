@@ -28,7 +28,7 @@ exports[`-Timer Display Tests- -Prop Tests- -should be displayed when run is tru
       >
         Completion Time:
          
-        21:01:58
+        09:01 PM
       </p>
     </div>
   </div>
@@ -76,7 +76,7 @@ exports[`-Timer Display Tests- -Prop Tests- -should not be hidden after its been
       >
         Completion Time:
          
-        21:01:58
+        09:01 PM
       </p>
     </div>
   </div>

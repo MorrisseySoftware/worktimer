@@ -161,7 +161,7 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     }, [props.run])
 
     const _stateClassName = () => {
-        if (isComplete()) {
+        if (isComplete() || !props.run) {
             return 'completed'
         }
         if (timerState.timer.timeleft.minutes < 5) {

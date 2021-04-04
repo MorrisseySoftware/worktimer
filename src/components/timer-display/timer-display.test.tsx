@@ -99,39 +99,67 @@ describe('-Timer Display Tests-', () => {
             expect(result).toBe('00:00:00')
         })
     })
-    // describe('Timer Styling Tests', () => {
-    //     it('should be render the display green when the timer is greater than 5 mins', () => {
-    //         const component = shallow(
-    //             <TimerDisplay
-    //                 run={true}
-    //                 timerCallback={() => {}}
-    //                 completedCallback={() => {}}
-    //             />
-    //         )
-    //         component.find('button')
-    //         expect(component.find('button')).toBeDefined()
-    //     })
-    //     it('should be render the display yellow when 0 < timer < 5 mins', () => {
-    //         const component = shallow(
-    //             <TimerDisplay
-    //                 run={true}
-    //                 timerCallback={() => {}}
-    //                 completedCallback={() => {}}
-    //             />
-    //         )
-    //         component.find('button')
-    //         expect(component.find('button')).toBeDefined()
-    //     })
-    //     it('should be render the display red when timer = 0 mins', () => {
-    //         const component = shallow(
-    //             <TimerDisplay
-    //                 run={true}
-    //                 timerCallback={() => {}}
-    //                 completedCallback={() => {}}
-    //             />
-    //         )
-    //         component.find('button')
-    //         expect(component.find('button')).toBeDefined()
-    //     })
-    // })
+    describe('Timer Styling Tests', () => {
+        it('should be render the display green when the timer is greater than 5 mins', () => {
+            mockDate_Add10Mins()
+            const component = mount(
+                <TimerDisplay
+                    run={true}
+                    completionTime={new Date(Date.now())}
+                    timerCallback={() => {}}
+                    completeCallback={() => {}}
+                />
+            )
+            const container = component.find('.container')
+            expect(container).toBeDefined()
+            expect(container.hasClass('completed')).toBeFalsy()
+            expect(container.hasClass('warning')).toBeFalsy()
+        })
+        it('should be render the display yellow when 0 < timer < 5 mins', () => {
+            mockDate_Add1Mins()
+            const component = mount(
+                <TimerDisplay
+                    run={true}
+                    completionTime={new Date(Date.now())}
+                    timerCallback={() => {}}
+                    completeCallback={() => {}}
+                />
+            )
+            const container = component.find('.container')
+            expect(container).toBeDefined()
+            expect(container.hasClass('completed')).toBeFalsy()
+            expect(container.hasClass('warning')).toBeTruthy()
+        })
+        it('should be render the display red when timer = 0 mins', () => {
+            mockDate_Static_Past()
+            const component = mount(
+                <TimerDisplay
+                    run={true}
+                    completionTime={new Date(Date.now())}
+                    timerCallback={() => {}}
+                    completeCallback={() => {}}
+                />
+            )
+            const container = component.find('.container')
+            expect(container).toBeDefined()
+            expect(container.hasClass('completed')).toBeTruthy()
+            expect(container.hasClass('warning')).toBeFalsy()
+        })
+        it('should be render the display red when timer stopped', () => {
+            mockDate_Add10Mins()
+            const component = mount(
+                <TimerDisplay
+                    run={true}
+                    completionTime={new Date(Date.now())}
+                    timerCallback={() => {}}
+                    completeCallback={() => {}}
+                />
+            )
+            component.setProps({ run: false })
+            const container = component.find('.container')
+            expect(container).toBeDefined()
+            expect(container.hasClass('completed')).toBeTruthy()
+            expect(container.hasClass('warning')).toBeFalsy()
+        })
+    })
 })
