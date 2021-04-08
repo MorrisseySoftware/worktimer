@@ -34,6 +34,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
         this.timerSet = this.timerSet.bind(this)
         this.completeTimer = this.completeTimer.bind(this)
+        this.stopTimer = this.stopTimer.bind(this)
         this.deleteStatItem = this.deleteStatItem.bind(this)
         this.timerBand = this.timerBand.bind(this)
     }
@@ -50,12 +51,21 @@ export default class App extends React.Component<AppProps, AppState> {
         })
     }
 
+    stopTimer(item: TimeState) {
+        const newHistory = [...this.state.timerHistory, item]
+        this.setState({
+            ...this.state,
+            timerHistory: newHistory,
+        })
+    }
+
     completeTimer(item: TimeState) {
         const newHistory = [...this.state.timerHistory, item]
         this.setState({
             ...this.state,
             timerHistory: newHistory,
-            soundWarning: this.state.soundWarning,
+            startTimer: false,
+            soundWarning: true,
         })
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(newHistory))
     }
@@ -88,7 +98,7 @@ export default class App extends React.Component<AppProps, AppState> {
                     run={this.state.startTimer}
                     completionTime={this.timerBand()}
                     completeCallback={this.completeTimer}
-                    timerCallback={this.completeTimer}
+                    timerCallback={this.stopTimer}
                 />
                 <StatsList
                     history={this.state.timerHistory}

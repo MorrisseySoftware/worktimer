@@ -22,6 +22,13 @@ export const timeLeftFromDate = (date: Date): TimeLeft => {
         milliseconds: 0,
     }
 }
+export const hasTimeLeft = (timeLeft: TimeLeft): boolean => {
+    return (
+        timeLeft.milliseconds > 0 ||
+        timeLeft.seconds > 0 ||
+        timeLeft.minutes > 0
+    )
+}
 export const printRemainingTime = (val: TimeLeft): string => {
     return `${addZeros(val.minutes)}:${addZeros(val.seconds)}:${addZeros(
         val.milliseconds

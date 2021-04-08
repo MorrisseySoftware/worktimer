@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
+    hasTimeLeft,
     printClockTime,
     printRemainingTime,
     TimeLeft,
@@ -24,6 +25,7 @@ export interface TimerProcessState {
     displayed: boolean
     running: boolean
     timer: TimeState
+    complete: boolean
 }
 
 export interface TimerDisplayProps {
@@ -37,6 +39,7 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     const [timerState, setTimerState] = useState({
         displayed: false,
         running: false,
+        complete: false,
         timer: {
             origin: timeLeftFromDate(props.completionTime),
             timeleft: timeLeftFromDate(props.completionTime),
@@ -44,14 +47,6 @@ export default function TimerDisplay(props: TimerDisplayProps) {
         } as TimeState,
     } as TimerProcessState)
     let displayState = TimerDisplayState.DEFAULT
-
-    const isComplete = (): boolean =>
-        !!(
-            timerState.timer.timeleft.minutes +
-                timerState.timer.timeleft.seconds +
-                timerState.timer.timeleft.milliseconds ===
-            0
-        )
 
     const _checkRunPropValue = (
         _timerState: TimerProcessState
@@ -77,7 +72,7 @@ export default function TimerDisplay(props: TimerDisplayProps) {
     const _checkCompletion = (
         _timerState: TimerProcessState
     ): TimerProcessState => {
-        if (_timerState.running && isComplete()) {
+        if (_timerState.running && _timerState.complete) {
             _timerState = {
                 ..._timerState,
                 running: false,
@@ -129,14 +124,17 @@ export default function TimerDisplay(props: TimerDisplayProps) {
                     } as TimeState,
                 }
                 _counter = setInterval(() => {
+                    const _newTimeLeft = timeLeftFromDate(
+                        _timerState.timer.completionTime
+                    )
+                    const _noTimeLeft = !hasTimeLeft(_newTimeLeft)
                     setTimerState({
                         ..._timerState,
                         timer: {
                             ..._timerState.timer,
-                            timeleft: timeLeftFromDate(
-                                _timerState.timer.completionTime
-                            ),
+                            timeleft: _newTimeLeft,
                         },
+                        complete: _noTimeLeft,
                     })
                 }, 50)
                 displayState = TimerDisplayState.DEFAULT
@@ -158,10 +156,10 @@ export default function TimerDisplay(props: TimerDisplayProps) {
         return () => {
             _stopInterval(_counter)
         }
-    }, [props.run])
+    }, [props.run, timerState.complete])
 
     const _stateClassName = () => {
-        if (isComplete() || !props.run) {
+        if (timerState.complete || !props.run) {
             return 'completed'
         }
         if (timerState.timer.timeleft.minutes < 5) {
