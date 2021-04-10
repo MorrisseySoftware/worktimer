@@ -57,6 +57,7 @@ export default class App extends React.Component<AppProps, AppState> {
             ...this.state,
             timerHistory: newHistory,
         })
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(newHistory))
     }
 
     completeTimer(item: TimeState) {
