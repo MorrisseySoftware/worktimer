@@ -35,9 +35,11 @@ export const printRemainingTime = (val: TimeLeft): string => {
     )}`
 }
 export const printRemainingTimeFromMilliseconds = (val: number): string => {
-    return `${addZeros(Math.floor((val / 1000 / 60) % 60))}:${addZeros(
-        Math.floor((val / 1000) % 60)
-    )}:${addZeros(Math.floor(val % 100))}`
+    return `${addZeros(Math.floor((val / 1000 / 60 / 60) % 60))}:${addZeros(
+        Math.floor((val / 1000 / 60) % 60)
+    )}:${addZeros(Math.floor((val / 1000) % 60))}:${addZeros(
+        Math.floor(val % 100)
+    )}`
 }
 export const printClockTime = (val: Date): string => {
     return val.toLocaleTimeString('en-US', {
